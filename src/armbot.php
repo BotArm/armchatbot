@@ -10,7 +10,7 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $body = file_get_contents('php://input');
-$events = json_decode($this->content, true)
+$events = json_decode($body, true)
 
 foreach ($events as $event) {
 	$MessageBuilder = new TextMessageBuilder($event['message']);

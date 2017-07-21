@@ -7,14 +7,7 @@ $secret = '255befc1f82d6539c481e5f593e92517' ;
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
-foreach ($bot->parseEvents() as $event) {
-  	$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-	$response = $bot->replyMessage($event['replyToken'], $textMessageBuilder);  
-};
+$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
+$response = $bot->replyMessage('', $textMessageBuilder);  
 
-public function parseEvents() {
-    $entityBody = file_get_contents('php://input');
-    $data = json_decode($entityBody, true);
-
-    return $data['events'];
-}
+echo $bot;

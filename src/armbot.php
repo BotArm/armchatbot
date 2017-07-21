@@ -19,7 +19,7 @@ foreach ($data['events'] as $event) {
 	//$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
 
 
-	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('123'.$yes->buildTemplateAction());
+	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('123');
 	$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
 }
  

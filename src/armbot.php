@@ -8,14 +8,9 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $entityBody = file_get_contents('php://input');
-$signature = $entityBody->getHeader(HTTPHeader::LINE_SIGNATURE);
-            if (empty($signature)) {
-                return $res->withStatus(400, 'Bad Request');
-            }
+$data = json_decode($entityBody, true);
 
-$events = $bot->parseEventRequest($entityBody, $secret , $signature[0]) ;
-
-foreach ($events as $event) {
+foreach ($data['events'] as $event) {
 
 }
 

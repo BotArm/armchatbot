@@ -8,7 +8,7 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $body = file_get_contents('php://input');
-if(!isset($body)){
+if(isset($body)){
 	$signature = $_SERVER["HTTP_".\LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
 }
 

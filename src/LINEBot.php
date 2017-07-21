@@ -48,12 +48,15 @@ class LINEBot
      * @param HTTPClient $httpClient HTTP client instance to use API calling.
      * @param array $args Configurations.
      */
-    public function __construct($channelAccessToken, $channelSecret)
-    
-        $this->httpClient = $channelAccessToken;
-        $this->channelSecret = $channelSecret;
+    public function __construct(HTTPClient $httpClient, array $args)
+    {
+        $this->httpClient = $httpClient;
+        $this->channelSecret = $args['channelSecret'];
+
         $this->endpointBase = LINEBot::DEFAULT_ENDPOINT_BASE;
-        
+        if (array_key_exists('endpointBase', $args) && !empty($args['endpointBase'])) {
+            $this->endpointBase = $args['endpointBase'];
+        }
     }
 
     /**
@@ -62,7 +65,6 @@ class LINEBot
      * @param string $userId The user ID to retrieve profile.
      * @return Response
      */
-
     public function getProfile($userId)
     {
         return $this->httpClient->get($this->endpointBase . '/v2/bot/profile/' . urlencode($userId));

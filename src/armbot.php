@@ -10,14 +10,11 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $body = file_get_contents('php://input');
-$signature = $_SERVER["HTTP_".\LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
+$events = json_decode($this->content, true)
 
-$data = $bot->parseEventRequest($body, $signature);
-
-foreach ($data as $event) {
-	$reply_token = $event->getReplyToken();
-	$MessageBuilder = new TextMessageBuilder('ควยไร');
-	$response = $bot->replyMessage( $reply_token , $MessageBuilder);  
+foreach ($events as $event) {
+	$MessageBuilder = new TextMessageBuilder($event['message']);
+	$response = $bot->replyMessage( $event['replyToken'] , json_encode($MessageBuilder));  
 }
  
 

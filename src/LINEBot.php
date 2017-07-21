@@ -66,6 +66,34 @@ class LINEBot
      * @return Response
      */
 
+    if (!function_exists('hash_equals')) {
+        defined('USE_MB_STRING') or define('USE_MB_STRING', function_exists('mb_strlen'));
+
+        function hash_equals($knownString, $userString)
+        {
+            $strlen = function ($string) {
+                if (USE_MB_STRING) {
+                    return mb_strlen($string, '8bit');
+                }
+
+                return strlen($string);
+            };
+
+            // Compare string lengths
+            if (($length = $strlen($knownString)) !== $strlen($userString)) {
+                return false;
+            }
+
+            $diff = 0;
+
+            // Calculate differences
+            for ($i = 0; $i < $length; $i++) {
+                $diff |= ord($knownString[$i]) ^ ord($userString[$i]);
+            }
+            return $diff === 0;
+        }
+    }
+
     public function parseEvents()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

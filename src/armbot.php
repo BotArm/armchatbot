@@ -47,7 +47,7 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-        $MessageBuilder = new TextMessageBuilder('ไอหน่อม') ;
+        $MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
 	}
 
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  

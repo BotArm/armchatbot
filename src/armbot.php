@@ -19,11 +19,15 @@ foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
 
 	if($msg == 'ทดสอบ') {
-		$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
-		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
-		
+		checkMember($event);
 	} else {
 		$MessageBuilder = new TextMessageBuilder($msg) ;
 	}
 		$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+}
+
+public function checkMember($event)
+{
+	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
+	[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
 }

@@ -13,25 +13,4 @@ $data = json_decode($entityBody, true);
 foreach ($data['events'] as $event) {
 	$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
 	$response = $bot->replyMessage($event['replyToken'], $textMessageBuilder);  
-
-	{
-  "type": "template",
-  "altText": "this is a confirm template",
-  "template": {
-      "type": "confirm",
-      "text": "Are you sure?",
-      "actions": [
-          {
-            "type": "message",
-            "label": "Yes",
-            "text": "yes"
-          },
-          {
-            "type": "message",
-            "label": "No",
-            "text": "no"
-          }
-      ]
-  }
-}
 }

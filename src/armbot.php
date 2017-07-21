@@ -13,7 +13,8 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $body = file_get_contents('php://input');
-$signature = $_SERVER["HTTP_".\LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
+$hash = hash_hmac('sha256', $body, $secret, true);
+$signature = base64_encode($hash);
 
 $data = $bot->parseEventRequest($body, $signature);
 
@@ -27,14 +28,7 @@ foreach ($data as $event) {
 
 	$reply_token = $event->getReplyToken();
 	//$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello its me');
-	$response = $bot->replyMessage( $reply_token , 
-                    new TemplateMessageBuilder(
-                        'Confirm alt text',
-                        new ConfirmTemplateBuilder('Do it?', [
-                            new MessageTemplateActionBuilder('Yes', 'Yes!'),
-                            new MessageTemplateActionBuilder('No', 'No!'),
-                        ])
-                    ));  
+	$response = $bot->replyMessage( $reply_token , 'ควยไร');  
 }
  
 

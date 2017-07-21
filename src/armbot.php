@@ -16,8 +16,8 @@ $body = file_get_contents('php://input');
 $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
-	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ทดสอบควยไร', 
-		[ new MessageTemplateActionBuilder('Yes', 'Yes') , new MessageTemplateActionBuilder('No', 'No') ]) );
+	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
+		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
 	//$MessageBuilder = json_encode( (object) $event['message'] );
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }

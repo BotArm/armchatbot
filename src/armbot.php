@@ -14,5 +14,3 @@ foreach ($data['events'] as $event) {
 	$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
 	$response = $bot->replyMessage($event['replyToken'], $textMessageBuilder);  
 }
-
-//echo $bot;

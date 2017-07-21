@@ -33,10 +33,5 @@
     "psr-4": {
       "LINE\\": "src/"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "LINE\\Tests\\": "tests/"
-    }
   }
 }

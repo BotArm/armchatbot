@@ -12,17 +12,7 @@ $data = json_decode($entityBody, true);
 
 foreach ($data['events'] as $event) {
 	$buttonTemplate = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder("คุณเคยสมัครแล้วหรือยัง", 
-		[{
-            "type" => "message",
-            "label" => "Yes",
-            "text"=> "เคยสมัครแล้ว"
-        },
-        {
-            "type" => "message",
-            "label" => "No",
-            "text" => "ยังไม่เคยสมัคร"
-        }
-        ]) ;
+		[]) ;
 	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('this is a confirm template', $buttonTemplate);
 	$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
 }

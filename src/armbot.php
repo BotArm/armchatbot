@@ -7,6 +7,18 @@ $secret = '255befc1f82d6539c481e5f593e92517' ;
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
+$entityBody = file_get_contents('php://input');
+$signature = $entityBody->getHeader(HTTPHeader::LINE_SIGNATURE);
+            if (empty($signature)) {
+                return $res->withStatus(400, 'Bad Request');
+            }
+
+$events = $bot->parseEventRequest($entityBody, $secret , $signature[0]) ;
+
+foreach ($events as $event) {
+
+}
+
 $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
 $response = $bot->replyMessage('', $textMessageBuilder);  
 

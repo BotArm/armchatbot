@@ -16,8 +16,7 @@ $body = file_get_contents('php://input');
 $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
-	$type = $event['message']['type'] ;
-	$msg = $event['message'] ;
+	$msg = $event['message']['text'] ;
 
 	if($msg == 'ทดสอบ') {
 		$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 

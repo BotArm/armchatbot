@@ -12,7 +12,7 @@ $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 $body = file_get_contents('php://input');
 $events = json_decode($body, true)
 
-foreach ($events as $event) {
+foreach ($events['events'] as $event) {
 	$MessageBuilder = new TextMessageBuilder($event['message']);
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }

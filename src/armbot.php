@@ -21,8 +21,15 @@ foreach ($data as $event) {
 	//$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
 
 	$reply_token = $event->getReplyToken();
-	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello its me');
-	$response = $bot->replyMessage( $reply_token , $MessageBuilder);  
+	//$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello its me');
+	$response = $bot->replyMessage( $reply_token , 
+                    new TemplateMessageBuilder(
+                        'Confirm alt text',
+                        new ConfirmTemplateBuilder('Do it?', [
+                            new MessageTemplateActionBuilder('Yes', 'Yes!'),
+                            new MessageTemplateActionBuilder('No', 'No!'),
+                        ])
+                    ));  
 }
  
 

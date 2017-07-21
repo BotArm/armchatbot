@@ -48,10 +48,10 @@ class LINEBot
      * @param HTTPClient $httpClient HTTP client instance to use API calling.
      * @param array $args Configurations.
      */
-    public function __construct(HTTPClient $httpClient, array $args)
-    {
-        $this->httpClient = $httpClient;
-        $this->channelSecret = $args['channelSecret'];
+    public function __construct($channelAccessToken, $channelSecret)
+    
+        $this->httpClient = $channelAccessToken;
+        $this->channelSecret = $channelSecret;
 
         $this->endpointBase = LINEBot::DEFAULT_ENDPOINT_BASE;
         if (array_key_exists('endpointBase', $args) && !empty($args['endpointBase'])) {
@@ -96,7 +96,7 @@ class LINEBot
         }
         return $data['events'];
     }
-    
+
     public function getProfile($userId)
     {
         return $this->httpClient->get($this->endpointBase . '/v2/bot/profile/' . urlencode($userId));

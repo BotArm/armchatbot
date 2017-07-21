@@ -21,4 +21,6 @@ foreach ($data['events'] as $event) {
 }
 $yes2 = new \LINE\LINEBot\MessageBuilder\TemplateActionBuilder\MessageTemplateActionBuilder("yes","เคยสมัครแล้ว") ;
 $buttonTemplate2 = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder("คุณเคยสมัครแล้วหรือยัง", $yes2->buildTemplateAction() );
-echo $buttonTemplate2->buildTemplate();
+echo ""+$buttonTemplate2->buildTemplate();
+ 
+

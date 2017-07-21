@@ -24,10 +24,10 @@ foreach ($events['events'] as $event) {
 		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
         break;
     case 'เคยสมัครแล้ว':
-        code to be executed if n=label2;
+        $MessageBuilder = new TextMessageBuilder('login flow') ;
         break;
     case 'ยังไม่เคยสมัคร':
-        code to be executed if n=label3;
+        $MessageBuilder = new TextMessageBuilder('new member flow') ;
         break;
     default:
         $MessageBuilder = new TextMessageBuilder('อย่าตอบนอกคำตอบที่ให้ไว้ไอสัส') ;

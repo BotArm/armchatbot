@@ -27,14 +27,7 @@ foreach ($data as $event) {
 
 	$reply_token = $event->getReplyToken();
 	//$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello its me');
-	$response = $bot->replyMessage( $reply_token , 
-                    new TemplateMessageBuilder(
-                        'Confirm alt text',
-                        new ConfirmTemplateBuilder('Do it?', [
-                            new MessageTemplateActionBuilder('Yes', 'Yes!'),
-                            new MessageTemplateActionBuilder('No', 'No!'),
-                        ])
-                    ));  
+	$response = $bot->replyMessage( $reply_token , 'ควยไร');  
 }
  
 

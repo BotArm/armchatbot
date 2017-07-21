@@ -52,11 +52,8 @@ class LINEBot
     
         $this->httpClient = $channelAccessToken;
         $this->channelSecret = $channelSecret;
-
         $this->endpointBase = LINEBot::DEFAULT_ENDPOINT_BASE;
-        if (array_key_exists('endpointBase', $args) && !empty($args['endpointBase'])) {
-            $this->endpointBase = $args['endpointBase'];
-        }
+        
     }
 
     /**

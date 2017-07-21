@@ -20,17 +20,34 @@ foreach ($events['events'] as $event) {
 
 	switch ($msg) {
     case 'เริ่ม':
+
         $MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
 		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
         break;
+
     case 'เคยสมัครแล้ว':
+
         $MessageBuilder = new TextMessageBuilder('login flow') ;
         break;
+
     case 'ยังไม่เคยสมัคร':
-        $MessageBuilder = new TextMessageBuilder('new member flow') ;
+
+    	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
+		[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
         break;
+
+    case 'อาจารย์':
+
+    	$MessageBuilder = new TextMessageBuilder('regis teacher') ;
+        break;
+
+    case 'นิสิต':
+
+    	$MessageBuilder = new TextMessageBuilder('regis student') ;
+        break;
+
     default:
-        $MessageBuilder = new TextMessageBuilder('อย่าตอบนอกคำตอบที่ให้ไว้ไอสัส') ;
+        $MessageBuilder = new TextMessageBuilder('ไอหน่อม') ;
 	}
 
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  

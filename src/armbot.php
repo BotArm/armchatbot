@@ -11,10 +11,8 @@ $entityBody = file_get_contents('php://input');
 $data = json_decode($entityBody, true);
 
 foreach ($data['events'] as $event) {
-
+	$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
+	$response = $bot->replyMessage($event['replyToken'], $textMessageBuilder);  
 }
-
-$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-$response = $bot->replyMessage('', $textMessageBuilder);  
 
 //echo $bot;

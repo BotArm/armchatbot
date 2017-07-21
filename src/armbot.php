@@ -18,16 +18,20 @@ $events = json_decode($body, true);
 foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
 
-	if($msg == 'ทดสอบ') {
-		checkMember($event);
-	} else {
-		$MessageBuilder = new TextMessageBuilder($msg) ;
+	switch ($msg) {
+    case 'เริ่ม':
+        $MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
+		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
+        break;
+    case 'เคยสมัครแล้ว':
+        code to be executed if n=label2;
+        break;
+    case 'ยังไม่เคยสมัคร':
+        code to be executed if n=label3;
+        break;
+    default:
+        $MessageBuilder = new TextMessageBuilder('อย่าตอบนอกคำตอบที่ให้ไว้ไอสัส') ;
 	}
-		$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
-}
 
-public function checkMember($event)
-{
-	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
-	[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
+	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }

@@ -7,10 +7,12 @@ $secret = '255befc1f82d6539c481e5f593e92517' ;
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
-$entityBody = file_get_contents('php://input');
-$data = json_decode($entityBody, true);
+$body = file_get_contents('php://input');
+$signature = $_SERVER["HTTP_".\LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
 
-foreach ($data['events'] as $event) {
+$data = $bot->parseEventRequest($body, $signature);
+
+foreach ($data as $event) {
 	//$yes = new \LINE\LINEBot\MessageBuilder\TemplateActionBuilder\MessageTemplateActionBuilder('yes','เคยสมัครแล้ว') ;
 	//$no = new \LINE\LINEBot\MessageBuilder\TemplateActionBuilder\MessageTemplateActionBuilder("no","ยังไม่เคยสมัคร") ;
 
@@ -18,9 +20,9 @@ foreach ($data['events'] as $event) {
 	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('this is a confirm template', $buttonTemplate ) ;*/
 	//$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
 
-
+	$reply_token = $event->getReplyToken();
 	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello its me');
-	$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
+	$response = $bot->replyMessage( $reply_token , $MessageBuilder);  
 }
  
 

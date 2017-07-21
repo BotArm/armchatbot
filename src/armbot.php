@@ -13,7 +13,7 @@ $body = file_get_contents('php://input');
 $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
-	$MessageBuilder = new TextMessageBuilder('ทดสอบ');
+	$MessageBuilder = new TextMessageBuilder('ทด'.'สอบ');
 	//$MessageBuilder = json_encode( (object) $event['message'] );
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }

@@ -8,4 +8,13 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-$response = $bot->replyMessage($bot['replyToken'], $textMessageBuilder);
+$events = $bot->parseEvents();
+$response = $bot->replyMessage($events['replyToken'], $textMessageBuilder);
+
+
+public function parseEvents() {
+    $entityBody = file_get_contents('php://input');
+    $data = json_decode($entityBody, true);
+
+    return $data['events'];
+}

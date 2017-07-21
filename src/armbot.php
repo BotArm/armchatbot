@@ -8,4 +8,4 @@ $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($token);
 $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-$response = $bot->replyMessage('<reply token>', $textMessageBuilder);
+$response = $bot->replyMessage($bot['replyToken'], $textMessageBuilder);

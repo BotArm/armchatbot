@@ -17,4 +17,5 @@ foreach ($data['events'] as $event) {
 	$buttonTemplate = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder("คุณเคยสมัครแล้วหรือยัง", $yes->buildTemplateAction() );
 	$MessageBuilder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('this is a confirm template', $buttonTemplate->buildTemplate()) ;
 	$response = $bot->replyMessage($event['replyToken'], $MessageBuilder);  
+	echo $buttonTemplate->buildTemplate();
 }

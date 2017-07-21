@@ -9,7 +9,7 @@ $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 
 $entityBody = file_get_contents('php://input');
 $data = json_decode($entityBody, true);
-
+echo $data;
 foreach ($data['events'] as $event) {
 	$yes = new \LINE\LINEBot\MessageBuilder\TemplateActionBuilder\MessageTemplateActionBuilder('yes','เคยสมัครแล้ว') ;
 	//$no = new \LINE\LINEBot\MessageBuilder\TemplateActionBuilder\MessageTemplateActionBuilder("no","ยังไม่เคยสมัคร") ;

@@ -14,7 +14,7 @@ $events = json_decode($this->content, true)
 
 foreach ($events as $event) {
 	$MessageBuilder = new TextMessageBuilder($event['message']);
-	$response = $bot->replyMessage( $event['replyToken'] , json_encode($MessageBuilder));  
+	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }
  
 

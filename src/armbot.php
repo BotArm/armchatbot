@@ -19,7 +19,7 @@ foreach ($events['events'] as $event) {
 	$type = $event['message']['type'] ;
 	$msg = $event['message'] ;
 
-	if($msg == 'ทดสอบ') ;{
+	if($msg == 'ทดสอบ') {
 		checkMember($event) ;
 	}
 }

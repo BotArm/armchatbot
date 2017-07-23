@@ -49,7 +49,8 @@ foreach ($events['events'] as $event) {
 	    		$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับคุณ '.$row['userName']) ;
 	    	}
 		} else {
-			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียนไปกรอกใบสมัครมาใหม่') ;
+			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียน มากรอกใบสมัครเลย') ;
+			goto ยังไม่เคยสมัคร ;
 		}
         $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;

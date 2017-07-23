@@ -7,7 +7,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder ;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ;
 
 //connect database
-/*$servername = "54.187.59.174";
+$servername = "54.187.59.174";
 $username = "itangx";
 $password = "password";
 
@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $password);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} */
+} 
 
 $token = 'QFW5zx4qTkWfWsQKNlaOf5lDCgFTNt+wKV8rw5P/8UlQxbOqNarlInIwuoEcNqgwiJhZTHen75QixKLah1ttM+Ms6snrxNSPcYV+284HLUEEbflnJuN5xHBCsvsOjaqXyoCW3lHu8uWgMwzL5pgPjAdB04t89/1O/w1cDnyilFU=' ;
 $secret = '255befc1f82d6539c481e5f593e92517' ;
@@ -55,8 +55,8 @@ foreach ($events['events'] as $event) {
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-    	//$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสอาจารย์', 'regis')";
-    	//$conn->query($sql)
+    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสอาจารย์', 'regis')";
+    	$conn->query($sql)
         break;
 
     case 'นิสิต':
@@ -64,12 +64,12 @@ foreach ($events['events'] as $event) {
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-    	//$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสนิสิต', 'regis')";
-    	//$conn->query($sql)
+    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสนิสิต', 'regis')";
+    	$conn->query($sql)
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('Session : '.) ;
+    	$MessageBuilder = new TextMessageBuilder('Session : ') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         //checkSession($session) ;
 	}
@@ -94,6 +94,6 @@ foreach ($events['events'] as $event) {
 	}
 }*/
 
-//$conn->close() ;
+$conn->close() ;
 
 ?>

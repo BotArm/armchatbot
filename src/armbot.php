@@ -96,7 +96,7 @@ foreach ($events['events'] as $event) {
     	$result = $conn->query($sql) ;
     	if ($result->num_rows > 0) {
     		while($row = $result->fetch_assoc()) { 
-    			checkSession($row["log_LastMsg"], $row["log_Session"]) ;
+    			this.checkSession($row["log_LastMsg"], $row["log_Session"]) ;
     		}
     	} else {
     		$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;

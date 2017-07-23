@@ -47,17 +47,19 @@ foreach ($events['events'] as $event) {
         break;
 
     case 'นิสิต':
-    	$session = "regis" ;
+    	$session = 'regis' ;
     	$lastMsg = 'กรุณาระบุรหัสนิสิต' ;
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     default:
-        $MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
-        $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+        checkSession($session) ;
 	}
+	
+}
 
+public function checkSession($session) {
 	if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
@@ -73,6 +75,6 @@ foreach ($events['events'] as $event) {
 	} else {
 		
 	}
-
-	
 }
+
+?>

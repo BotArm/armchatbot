@@ -46,7 +46,12 @@ foreach ($events['events'] as $event) {
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 	    	while($row = $result->fetch_assoc()) {
-	    		$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับคุณ '.$row['userName']) ;
+	    		if($row['userTypeNo'] == '1'){
+					$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับอาจารย์ '.$row['userName']) ;
+	    		} else {
+	    			$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับนิสิต '.$row['userName']) ;
+	    		}
+	    		
 	    	}
 		} else {
 			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียน มากรอกใบสมัครเลย') ;

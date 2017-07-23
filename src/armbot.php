@@ -74,11 +74,14 @@ foreach ($events['events'] as $event) {
 
     default:
     	$sql = "SELECT * FROM log where log_id = (SELECT MAX(log_Id) FROM log)";
-    	$conn->query($sql) ;
+    	$result = $conn->query($sql) ;
     	if ($result->num_rows > 0) {
     		while($row = $result->fetch_assoc()) {
     			checkSession($row["log_LastMsg"], $row["log_Session"]) ;
     		}
+    	} else {
+    		$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
+    		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
     	}
 	}
 	

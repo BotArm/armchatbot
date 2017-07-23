@@ -50,7 +50,11 @@ foreach ($events['events'] as $event) {
 	    	}
 		} else {
 			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียน มากรอกใบสมัครเลย') ;
-			goto 'ยังไม่เคยสมัคร' ;
+			$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
+			[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
+			$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
 		}
         $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;

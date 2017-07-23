@@ -85,7 +85,7 @@ foreach ($events['events'] as $event) {
 						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
 						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-						$sql = "UPDATE log SET log_LastMsg='ยืนยันรหัส', log_Session='regis', userMsg='".$msg."' where log_Id = (SELECT MAX(log_Id) FROM log where log_LineUserId = '".$event['source']['userId']."')";
+						$sql = "UPDATE log SET log_LastMsg='ยืนยันรหัส', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
     					$conn->query($sql) ;
 						break;
 

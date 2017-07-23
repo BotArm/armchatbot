@@ -10,8 +10,9 @@ use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ;
 $servername = "54.187.59.174";
 $username = "itangx";
 $password = "password";
+$dbname = "LineChatBot";
 
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -48,6 +49,7 @@ foreach ($events['events'] as $event) {
     	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
 		[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
 		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
         break;
 
     case 'อาจารย์':

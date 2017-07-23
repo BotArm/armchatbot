@@ -51,7 +51,7 @@ foreach ($events['events'] as $event) {
 	    		} else {
 	    			$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับนิสิต '.$row['userName']) ;
 	    		}
-	    		
+	    		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 	    	}
 		} else {
 
@@ -62,14 +62,27 @@ foreach ($events['events'] as $event) {
 			$bot->pushMessage( $event['source']['userId'] , $MessageBuilder);  
 
 		}
-        $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+        
         break;
 
     case 'ยังไม่เคยสมัคร':
 
-    	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
-		[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
-		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+    	$sql = "SELECT * FROM user_table where lineID = '".$event['source']['userId']."'";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+	    	while($row = $result->fetch_assoc()) {
+	    		if($row['userTypeNo'] == '1'){
+					$MessageBuilder = new TextMessageBuilder('คุณเคยสมัครแล้วครับอาจารย์ '.$row['userName']) ;
+	    		} else {
+	    			$MessageBuilder = new TextMessageBuilder('คุณเคยสมัครแล้วครับนิสิต '.$row['userName']) ;
+	    		}
+	    		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+	    	}
+		} else {
+			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
+			[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
+			$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+		}
 
         break;
 
@@ -104,19 +117,19 @@ foreach ($events['events'] as $event) {
 						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
 						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-						$sql = "UPDATE log SET log_LastMsg='ยืนยันรหัส', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
+						$sql = "UPDATE log SET log_LastMsg='ยืนยันรหัสอาจารย์', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
     					$conn->query($sql) ;
 						break;
 
-					case 'ยืนยันรหัส' :
+					case 'ยืนยันรหัสอาจารย์' :
 						if($msg == 'ใช่') {
 							$sql = "INSERT INTO user_table (userID, lineID, userTypeNo) VALUES ('".$row["userMsg"]."', '".$event['source']['userId']."', 1)";
     						$conn->query($sql) ;
 
-    						$MessageBuilder = new TextMessageBuilder('กรุณาระบุุชื่ออาจารย์') ;
+    						$MessageBuilder = new TextMessageBuilder('กรุณาระบุชื่ออาจารย์') ;
     						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
 
-    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุุชื่ออาจารย์', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุชื่ออาจารย์', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
     						$conn->query($sql) ;
 						} else {
 							$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
@@ -127,35 +140,97 @@ foreach ($events['events'] as $event) {
 						}
 						break;
 
-					case 'กรุณาระบุุชื่ออาจารย์' :
+					case 'กรุณาระบุชื่ออาจารย์' :
 						$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันชื่อ '.$msg, 
 						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
 						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-						$sql = "UPDATE log SET log_LastMsg='ยืนยันชื่อ', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
+						$sql = "UPDATE log SET log_LastMsg='ยืนยันชื่ออาจารย์', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
     					$conn->query($sql) ;
 						break;
 
-					case 'ยืนยันชื่อ' :
+					case 'ยืนยันชื่ออาจารย์' :
 						if($msg == 'ใช่') {
-							$sql = "UPDATE user_table SET userName='".$row["userMsg"]."', where lineID = '".$row["log_LineUserId"]."'";
+							$sql = "UPDATE user_table SET userName='".$row["userMsg"]."' where lineID = '".$row["log_LineUserId"]."'";
     						$conn->query($sql) ;
 
     						$MessageBuilder = new TextMessageBuilder('เสร็จสิ้นการลงทะเบียน ขอบคุณครับ') ;
     						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
+    						$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับอาจารย์ '.$row["userMsg"]) ;
+							$bot->pushMessage( $event['replyToken'] , $MessageBuilder);   
 
     						$sql = "UPDATE log SET log_LastMsg = 'ผ่าน', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
     						$conn->query($sql) ;
 						} else {
-							$MessageBuilder = new TextMessageBuilder('กรุณาระบุุชื่ออาจารย์') ;
+							$MessageBuilder = new TextMessageBuilder('กรุณาระบุชื่ออาจารย์') ;
     						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
 
-    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุุชื่ออาจารย์', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุชื่ออาจารย์', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$conn->query($sql) ;
+						}
+						break;
+
+					case 'กรุณาระบุรหัสนิสิต' :
+						$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
+						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
+						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
+						$sql = "UPDATE log SET log_LastMsg='ยืนยันรหัสนิสิต', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
+    					$conn->query($sql) ;
+						break;
+
+					case 'ยืนยันรหัสนิสิต' :
+						if($msg == 'ใช่') {
+							$sql = "INSERT INTO user_table (userID, lineID, userTypeNo) VALUES ('".$row["userMsg"]."', '".$event['source']['userId']."', 2)";
+    						$conn->query($sql) ;
+
+    						$MessageBuilder = new TextMessageBuilder('กรุณาระบุชื่อนิสิต') ;
+    						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
+
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุชื่อนิสิต', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$conn->query($sql) ;
+						} else {
+							$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
+    						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุรหัสนิสิต', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$conn->query($sql) ;
+						}
+						break;
+
+					case 'กรุณาระบุชื่อนิสิต' :
+						$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันชื่อ '.$msg, 
+						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
+						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
+						$sql = "UPDATE log SET log_LastMsg='ยืนยันชื่อนิสิต', log_Session='regis', userMsg='".$msg."' where log_Id = '".$row["log_Id"]."'";
+    					$conn->query($sql) ;
+						break;
+
+					case 'ยืนยันชื่อนิสิต' :
+						if($msg == 'ใช่') {
+							$sql = "UPDATE user_table SET userName='".$row["userMsg"]."' where lineID = '".$row["log_LineUserId"]."'";
+    						$conn->query($sql) ;
+
+    						$MessageBuilder = new TextMessageBuilder('เสร็จสิ้นการลงทะเบียน ขอบคุณครับ') ;
+    						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
+							$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับนิสิต '.$row["userMsg"]) ;
+							$bot->pushMessage( $event['replyToken'] , $MessageBuilder);    
+
+    						$sql = "UPDATE log SET log_LastMsg = 'ผ่าน', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
+    						$conn->query($sql) ;
+						} else {
+							$MessageBuilder = new TextMessageBuilder('กรุณาระบุชื่อนิสิต') ;
+    						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
+
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุชื่อนิสิต', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
     						$conn->query($sql) ;
 						}
 						break;
 
 					default:
+						$MessageBuilder = new TextMessageBuilder('อย่านอกเรื่อง') ;
+    					$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 			        	break;
 					}
 

@@ -7,7 +7,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder ;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ;
 
 //connect database
-/*$servername = "54.187.59.174";
+$servername = "54.187.59.174";
 $username = "itangx";
 $password = "password";
 
@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $password);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} */
+} 
 
 $token = 'QFW5zx4qTkWfWsQKNlaOf5lDCgFTNt+wKV8rw5P/8UlQxbOqNarlInIwuoEcNqgwiJhZTHen75QixKLah1ttM+Ms6snrxNSPcYV+284HLUEEbflnJuN5xHBCsvsOjaqXyoCW3lHu8uWgMwzL5pgPjAdB04t89/1O/w1cDnyilFU=' ;
 $secret = '255befc1f82d6539c481e5f593e92517' ;

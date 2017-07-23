@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+session_start();
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder ;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder ;
@@ -40,7 +41,7 @@ foreach ($events['events'] as $event) {
         break;
 
     case 'อาจารย์':
-    	$session = 'regis' ;
+    	$_SESSION['regis'] = 'regis';
     	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
@@ -54,7 +55,7 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('Session : '.$session) ;
+    	$MessageBuilder = new TextMessageBuilder('Session : '.$_SESSION['regis']) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         //checkSession($session) ;
 	}

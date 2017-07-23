@@ -73,13 +73,13 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-    	$sql = "SELECT * FROM log where log_id = (SELECT MAX(log_Id) FROM log)";
+    	$sql = "SELECT * FROM log where log_id = (SELECT MAX(log_Id) FROM log where log_LineUserId = '".$event['source']['userId']."')";
     	$result = $conn->query($sql) ;
     	if ($result->num_rows > 0) {
-    		while($row = $result->fetch_assoc()) {
-    			$MessageBuilder = new TextMessageBuilder('LastMsg : '.$row["log_LastMsg"]." Session : ".$row["log_Session"]) ;
-    			$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
-    			//checkSession($row["log_LastMsg"], $row["log_Session"]) ;
+    		while($row = $result->fetch_assoc()) { 
+    			$MessageBuilder = new TextMessageBuilder('LastMsg1 : '.$lastMsg." Session1 : ".$session) ;
+    			$bot->replyMessage( $event['replyToken'] , $MessageBuilder); 
+    			checkSession($row["log_LastMsg"], $row["log_Session"]) ;
     		}
     	} else {
     		$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
@@ -90,7 +90,7 @@ foreach ($events['events'] as $event) {
 }
 
 function checkSession($lastMsg, $session) {
-	if($session == 'regis'){
+	/*if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
 			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
@@ -103,7 +103,9 @@ function checkSession($lastMsg, $session) {
 		}
 	} else {
 		
-	}
+	}*/
+	$MessageBuilder = new TextMessageBuilder('LastMsg2 : '.$lastMsg." Session2 : ".$session) ;
+    $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }
 
 $conn->close() ;

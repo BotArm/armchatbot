@@ -55,7 +55,7 @@ foreach ($events['events'] as $event) {
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสอาจารย์', 'regis')";
+    	//$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสอาจารย์', 'regis')";
     	//$conn->query($sql)
         break;
 
@@ -64,7 +64,7 @@ foreach ($events['events'] as $event) {
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
-    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสนิสิต', 'regis')";
+    	//$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสนิสิต', 'regis')";
     	//$conn->query($sql)
         break;
 

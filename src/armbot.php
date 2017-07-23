@@ -29,6 +29,25 @@ $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $secret]);
 $body = file_get_contents('php://input');
 $events = json_decode($body, true);
 
+function checkSession($lastMsg, $session) {
+	/*if($session == 'regis'){
+		switch ($lastMsg) {
+		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
+			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
+			[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
+			$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+			break;
+
+		default:
+        	
+		}
+	} else {
+		
+	}*/
+	$MessageBuilder = new TextMessageBuilder('LastMsg2 : '.$lastMsg." Session2 : ".$session) ;
+    $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+}
+
 foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
 
@@ -87,25 +106,6 @@ foreach ($events['events'] as $event) {
     	}
 	}
 	
-}
-
-function checkSession($lastMsg, $session) {
-	/*if($session == 'regis'){
-		switch ($lastMsg) {
-		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
-			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
-			[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
-			$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
-			break;
-
-		default:
-        	
-		}
-	} else {
-		
-	}*/
-	$MessageBuilder = new TextMessageBuilder('LastMsg2 : '.$lastMsg." Session2 : ".$session) ;
-    $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 }
 
 $conn->close() ;

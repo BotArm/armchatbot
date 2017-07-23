@@ -37,17 +37,33 @@ foreach ($events['events'] as $event) {
         break;
 
     case 'อาจารย์':
-
-    	$MessageBuilder = new TextMessageBuilder('regis teacher') ;
+    	$session = 'regis' ;
+    	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
+    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
         break;
 
     case 'นิสิต':
-
-    	$MessageBuilder = new TextMessageBuilder('regis student') ;
+    	$session = "regis" ;
+    	$lastMsg = 'กรุณาระบุรหัสนิสิต' ;
+    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
         break;
 
     default:
         $MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
+	}
+
+	if($session == 'regis'){
+		switch ($lastMsg) {
+		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
+			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส'.$msg, 
+			[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
+			break;
+
+		default:
+        	$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
+		}
+	} else {
+		
 	}
 
 	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  

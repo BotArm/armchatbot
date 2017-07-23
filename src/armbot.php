@@ -54,7 +54,7 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('ควย') ;
+    	$MessageBuilder = new TextMessageBuilder('Session : '.$session) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         //checkSession($session) ;
 	}

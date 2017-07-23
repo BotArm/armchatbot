@@ -76,7 +76,7 @@ foreach ($events['events'] as $event) {
 	
 }
 
-function checkSession($session) {
+/*function checkSession($session) {
 	if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
@@ -92,7 +92,7 @@ function checkSession($session) {
 	} else {
 		
 	}
-}
+}*/
 
 $conn->close() ;
 

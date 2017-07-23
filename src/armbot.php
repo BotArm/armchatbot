@@ -78,16 +78,34 @@ foreach ($events['events'] as $event) {
     	if ($result->num_rows > 0) {
     		while($row = $result->fetch_assoc()) { 
     			if($row["log_Session"] == 'regis'){
+
 					switch ($row["log_LastMsg"]) {
 					case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
 						$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
 						[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
 						$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
+						$sql = "UPDATE log SET log_LastMsg = 'ยืนยันรหัส', log_Session ='regis', userMsg = '".$msg."' where log_id = (SELECT MAX(log_Id) FROM log where log_LineUserId = '".$event['source']['userId']."')";
+    					$conn->query($sql) ;
 						break;
 
+					case 'ยืนยันรหัส' :
+						if($msg == 'ใช่') {
+							$sql = "INSERT INTO user_table (userID, lineID) VALUES ('".$row["userMsg"]."', '".$event['source']['userId']."')";
+    						$conn->query($sql) ;
+
+    						$MessageBuilder = new TextMessageBuilder('กรุณาระบุุชื่ออาจารย์') ;
+    						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
+
+    						$sql = "UPDATE log SET log_LastMsg = 'กรุณาระบุุชื่ออาจารย์', log_Session ='regis', userMsg = '".$msg."' where log_id = (SELECT MAX(log_Id) FROM log where log_LineUserId = '".$event['source']['userId']."')";
+    						$conn->query($sql) ;
+						} else {
+
+						}
 					default:
 			        	
 					}
+
 				} else {
 					//do anythings
 				}

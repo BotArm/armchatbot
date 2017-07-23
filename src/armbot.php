@@ -157,7 +157,7 @@ foreach ($events['events'] as $event) {
     						$MessageBuilder = new TextMessageBuilder('เสร็จสิ้นการลงทะเบียน ขอบคุณครับ') ;
     						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
     						$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับอาจารย์ '.$row["userMsg"]) ;
-							$bot->pushMessage( $event['replyToken'] , $MessageBuilder);   
+							$bot->pushMessage( $event['source']['userId'] , $MessageBuilder);   
 
     						$sql = "UPDATE log SET log_LastMsg = 'ผ่าน', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
     						$conn->query($sql) ;
@@ -215,7 +215,7 @@ foreach ($events['events'] as $event) {
     						$MessageBuilder = new TextMessageBuilder('เสร็จสิ้นการลงทะเบียน ขอบคุณครับ') ;
     						$bot->replyMessage( $event['replyToken'] , $MessageBuilder);    
 							$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับนิสิต '.$row["userMsg"]) ;
-							$bot->pushMessage( $event['replyToken'] , $MessageBuilder);    
+							$bot->pushMessage( $event['source']['userId'] , $MessageBuilder);    
 
     						$sql = "UPDATE log SET log_LastMsg = 'ผ่าน', log_Session ='regis', userMsg = '".$msg."' where log_Id = '".$row["log_Id"]."'";
     						$conn->query($sql) ;

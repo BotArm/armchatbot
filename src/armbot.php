@@ -42,7 +42,15 @@ foreach ($events['events'] as $event) {
 
     case 'เคยสมัครแล้ว':
 
-        $MessageBuilder = new TextMessageBuilder('login flow') ;
+    	$sql = "SELECT * FROM user_table where lineID = '".$event['source']['userId']."'";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+	    	while($row = $result->fetch_assoc()) {
+	    		$MessageBuilder = new TextMessageBuilder('ยินดีต้อนรับคุณ '.$row['userName']) ;
+	    	}
+		} else {
+			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียนไปกรอกใบสมัครมาใหม่') ;
+		}
         $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 

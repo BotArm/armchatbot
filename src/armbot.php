@@ -23,17 +23,20 @@ foreach ($events['events'] as $event) {
 
         $MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('คุณเคยสมัครแล้วหรือยัง', 
 		[ new MessageTemplateActionBuilder('เคยสมัครแล้ว', 'เคยสมัครแล้ว') , new MessageTemplateActionBuilder('ยังไม่เคยสมัคร', 'ยังไม่เคยสมัคร') ]) );
+        $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     case 'เคยสมัครแล้ว':
 
         $MessageBuilder = new TextMessageBuilder('login flow') ;
+        $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     case 'ยังไม่เคยสมัคร':
 
     	$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('กรุณาระบุว่าเป็นอาจารย์ / นิสิต ', 
 		[ new MessageTemplateActionBuilder('อาจารย์', 'อาจารย์') , new MessageTemplateActionBuilder('นิสิต', 'นิสิต') ]) );
+		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     case 'อาจารย์':
@@ -52,6 +55,7 @@ foreach ($events['events'] as $event) {
 
     default:
         $MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
+        $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 	}
 
 	if($session == 'regis'){
@@ -64,6 +68,7 @@ foreach ($events['events'] as $event) {
 
 		default:
         	$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
+        	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 		}
 	} else {
 		

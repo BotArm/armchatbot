@@ -77,7 +77,7 @@ foreach ($events['events'] as $event) {
     	$result = $conn->query($sql) ;
     	if ($result->num_rows > 0) {
     		while($row = $result->fetch_assoc()) { 
-    			$MessageBuilder = new TextMessageBuilder('LastMsg1 : '.$lastMsg." Session1 : ".$session) ;
+    			$MessageBuilder = new TextMessageBuilder('LastMsg1 : '.$row["log_LastMsg"]." Session1 : ".$row["log_Session"]) ;
     			$bot->replyMessage( $event['replyToken'] , $MessageBuilder); 
     			checkSession($row["log_LastMsg"], $row["log_Session"]) ;
     		}

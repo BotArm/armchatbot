@@ -40,12 +40,14 @@ foreach ($events['events'] as $event) {
     	$session = 'regis' ;
     	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
+    	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     case 'นิสิต':
     	$session = "regis" ;
     	$lastMsg = 'กรุณาระบุรหัสนิสิต' ;
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
+    	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
     default:
@@ -57,6 +59,7 @@ foreach ($events['events'] as $event) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
 			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส'.$msg, 
 			[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
+			$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 			break;
 
 		default:
@@ -66,5 +69,5 @@ foreach ($events['events'] as $event) {
 		
 	}
 
-	$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+	
 }

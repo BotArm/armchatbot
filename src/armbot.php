@@ -41,9 +41,9 @@ foreach ($events['events'] as $event) {
         break;
 
     case 'อาจารย์':
-    	$_SESSION['regis'] = 'regis';
+    	setcookie("regis","regis");
     	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
-    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์'.$_SESSION['regis']) ;
+    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์'.$_COOKIE["regis"];) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 
@@ -55,7 +55,7 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('Session : '.$_SESSION['regis']) ;
+    	$MessageBuilder = new TextMessageBuilder('Session : '.$_COOKIE["regis"];) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         //checkSession($session) ;
 	}

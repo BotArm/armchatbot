@@ -1,11 +1,21 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once 'dbConnection.php' ;
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder ;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder ;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder ;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder ;
+
+//connect database
+$servername = "54.187.59.174";
+$username = "itangx";
+$password = "password";
+
+$conn = new mysqli($servername, $username, $password);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
 $token = 'QFW5zx4qTkWfWsQKNlaOf5lDCgFTNt+wKV8rw5P/8UlQxbOqNarlInIwuoEcNqgwiJhZTHen75QixKLah1ttM+Ms6snrxNSPcYV+284HLUEEbflnJuN5xHBCsvsOjaqXyoCW3lHu8uWgMwzL5pgPjAdB04t89/1O/w1cDnyilFU=' ;
 $secret = '255befc1f82d6539c481e5f593e92517' ;
@@ -18,7 +28,6 @@ $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
-	//global $conn; 
 
 	switch ($msg) {
     case 'เริ่ม':
@@ -47,7 +56,7 @@ foreach ($events['events'] as $event) {
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
     	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES (".$event['source']['userId'].", 'กรุณาระบุรหัสอาจารย์', 'regis')";
-    	//$conn->query($sql)
+    	$conn->query($sql)
         break;
 
     case 'นิสิต':
@@ -56,7 +65,7 @@ foreach ($events['events'] as $event) {
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
     	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES (".$event['source']['userId'].", 'กรุณาระบุรหัสนิสิต', 'regis')";
-    	//$conn->query($sql)
+    	$conn->query($sql)
         break;
 
     default:
@@ -84,5 +93,7 @@ function checkSession($session) {
 		
 	}
 }
+
+$conn->close() ;
 
 ?>

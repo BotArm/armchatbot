@@ -59,7 +59,7 @@ foreach ($events['events'] as $event) {
 	
 }
 
-public function checkSession($session) {
+function checkSession($session) {
 	if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :

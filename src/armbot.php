@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-session_start();
+include('databaseConnection.php');
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder ;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder ;
@@ -18,6 +18,7 @@ $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
+	global $db; 
 
 	switch ($msg) {
     case 'เริ่ม':
@@ -41,21 +42,25 @@ foreach ($events['events'] as $event) {
         break;
 
     case 'อาจารย์':
-    	apc_store('regis', 'regis');
-    	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
-    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์'.apc_fetch('regis')) ;
+
+    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+
+    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES (".$event['source']['userId'].", 'กรุณาระบุรหัสอาจารย์', 'regis')";
+    	$conn->query($sql)
         break;
 
     case 'นิสิต':
-    	$session = 'regis' ;
-    	$lastMsg = 'กรุณาระบุรหัสนิสิต' ;
+	
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+    	
+    	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES (".$event['source']['userId'].", 'กรุณาระบุรหัสนิสิต', 'regis')";
+    	$conn->query($sql)
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('Session : '.apc_fetch('regis')) ;
+    	$MessageBuilder = new TextMessageBuilder('Session : '.) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         //checkSession($session) ;
 	}

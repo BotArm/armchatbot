@@ -56,7 +56,7 @@ foreach ($events['events'] as $event) {
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
     	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสอาจารย์', 'regis')";
-    	$conn->query($sql)
+    	$conn->query($sql) ;
         break;
 
     case 'นิสิต':
@@ -65,7 +65,7 @@ foreach ($events['events'] as $event) {
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 
     	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES ('".$event['source']['userId']."', 'กรุณาระบุรหัสนิสิต', 'regis')";
-    	$conn->query($sql)
+    	$conn->query($sql) ;
         break;
 
     default:

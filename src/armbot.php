@@ -18,7 +18,7 @@ $events = json_decode($body, true);
 
 foreach ($events['events'] as $event) {
 	$msg = $event['message']['text'] ;
-	global $db; 
+	global $conn; 
 
 	switch ($msg) {
     case 'เริ่ม':
@@ -54,7 +54,7 @@ foreach ($events['events'] as $event) {
 	
     	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสนิสิต') ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
-    	
+
     	$sql = "INSERT INTO log (log_LineUserId, log_LastMsg, log_Session) VALUES (".$event['source']['userId'].", 'กรุณาระบุรหัสนิสิต', 'regis')";
     	$conn->query($sql)
         break;

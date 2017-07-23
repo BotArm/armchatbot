@@ -43,7 +43,7 @@ foreach ($events['events'] as $event) {
     case 'อาจารย์':
     	$_SESSION['regis'] = 'regis';
     	$lastMsg = 'กรุณาระบุรหัสอาจารย์' ;
-    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์') ;
+    	$MessageBuilder = new TextMessageBuilder('กรุณาระบุรหัสอาจารย์'.$_SESSION['regis']) ;
     	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;
 

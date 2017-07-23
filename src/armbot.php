@@ -54,6 +54,8 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
+    	$MessageBuilder = new TextMessageBuilder($session) ;
+    	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         checkSession($session) ;
 	}
 	
@@ -63,7 +65,7 @@ function checkSession($session) {
 	if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
-			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส'.$msg, 
+			$MessageBuilder = new TemplateMessageBuilder('ทดสอบ', new ConfirmTemplateBuilder('ยืนยันรหัส '.$msg, 
 			[ new MessageTemplateActionBuilder('ใช่', 'ใช่') , new MessageTemplateActionBuilder('ไม่ใช่', 'ไม่ใช่') ]) );
 			$response = $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
 			break;

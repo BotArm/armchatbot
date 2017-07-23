@@ -73,14 +73,18 @@ foreach ($events['events'] as $event) {
         break;
 
     default:
-    	$MessageBuilder = new TextMessageBuilder('Session : ') ;
-    	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
-        //checkSession($session) ;
+    	$sql = "SELECT * FROM log where log_id = (SELECT MAX(log_Id) FROM log)";
+    	$conn->query($sql) ;
+    	if ($result->num_rows > 0) {
+    		while($row = $result->fetch_assoc()) {
+    			checkSession($row["log_LastMsg"], $row["log_Session"]) ;
+    		}
+    	}
 	}
 	
 }
 
-/*function checkSession($session) {
+function checkSession($lastMsg, $session) {
 	if($session == 'regis'){
 		switch ($lastMsg) {
 		case 'กรุณาระบุรหัสอาจารย์' || 'กรุณาระบุรหัสนิสิต' :
@@ -90,13 +94,12 @@ foreach ($events['events'] as $event) {
 			break;
 
 		default:
-        	$MessageBuilder = new TextMessageBuilder('อย่าพิมอย่างอื่นไอหน่อม') ;
-        	$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
+        	
 		}
 	} else {
 		
 	}
-}*/
+}
 
 $conn->close() ;
 

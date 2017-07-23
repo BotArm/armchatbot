@@ -50,7 +50,7 @@ foreach ($events['events'] as $event) {
 	    	}
 		} else {
 			$MessageBuilder = new TextMessageBuilder('มึงไม่เนียน มากรอกใบสมัครเลย') ;
-			goto ยังไม่เคยสมัคร ;
+			goto 'ยังไม่เคยสมัคร' ;
 		}
         $bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
         break;

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-include('databaseConnection.php');
+include('dbConnection.php');
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder ;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder ;

@@ -239,7 +239,7 @@ foreach ($events['events'] as $event) {
 				}
     		}
     	} else {
-    		$MessageBuilder = new TextMessageBuilder('world') ;
+    		$MessageBuilder = new TextMessageBuilder('I dont know') ;
     		$bot->replyMessage( $event['replyToken'] , $MessageBuilder);  
     	}
     	break;
